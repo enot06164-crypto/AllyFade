@@ -1,0 +1,7 @@
+name: "ally-fade"
+displayName: "Ally Fade"
+author: "AllyFade"
+description: "Fades allied flying units that cover the center of the camera view, without changing gameplay."
+version: "1.0.0"
+minGameVersion: "160"
+main: "allyfade.AllyFadeMod"

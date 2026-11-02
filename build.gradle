@@ -1,0 +1,48 @@
+plugins {
+    id 'java'
+}
+
+group = 'allyfade'
+version = '1.0.0'
+
+def mindustryVersion = findProperty('mindustryVersion') ?: 'v160.7'
+
+repositories {
+    mavenCentral()
+    maven { url = 'https://jitpack.io' }
+}
+
+dependencies {
+    // Mindustry and Arc must never be packaged into the mod JAR.
+    compileOnly "com.github.Anuken.Mindustry:core:${mindustryVersion}"
+    compileOnly "com.github.Anuken.Arc:arc-core:${mindustryVersion}"
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+    options.compilerArgs += ['-Xlint:deprecation']
+}
+
+processResources {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+}
+
+jar {
+    archiveFileName = 'AllyFade.jar'
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+
+    // mod.hjson lives at the project root and must be at the JAR root.
+    from('mod.hjson')
+
+    manifest {
+        attributes(
+            'Implementation-Title': 'Ally Fade',
+            'Implementation-Version': project.version
+        )
+    }
+}
